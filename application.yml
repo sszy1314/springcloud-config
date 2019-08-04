@@ -7,23 +7,23 @@ spring:
 spring:
   profiles: dev			#开发环境
   application:
-    name: cloud-config-sszy-dev
+    name: springcloud-config-sszy-dev
 
 ---
 spring:
   profiles: test			#测试环境
   application:
-    name: cloud-config-sszy-test
+    name: springcloud-config-sszy-test
  
  ---  
 spring:
   profiles: dev			#开发环境
   application:
-    name: cloud-config-sszy-uat
+    name: springcloud-config-sszy-uat
 
 ---
 spring:
   profiles: test			#测试环境
   application:
-    name: cloud-config-sszy-release
+    name: springcloud-config-sszy-release
 
