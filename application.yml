@@ -17,13 +17,13 @@ spring:
  
  ---  
 spring:
-  profiles: dev			#开发环境
+  profiles: uat			#开发环境
   application:
     name: springcloud-config-sszy-uat
 
 ---
 spring:
-  profiles: test			#测试环境
+  profiles: release			#测试环境
   application:
     name: springcloud-config-sszy-release
 
