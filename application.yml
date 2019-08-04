@@ -14,16 +14,3 @@ spring:
   profiles: test			#测试环境
   application:
     name: springcloud-config-sszy-test
- 
- ---  
-spring:
-  profiles: uat			#开发环境
-  application:
-    name: springcloud-config-sszy-uat
-
----
-spring:
-  profiles: release			#测试环境
-  application:
-    name: springcloud-config-sszy-release
-
