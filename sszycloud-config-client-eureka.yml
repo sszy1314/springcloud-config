@@ -1,6 +1,8 @@
 server: 
   port: 3388 
-
+spring:
+  profiles:
+    active: dev
 ---
 server:
   port: 8201
