@@ -16,7 +16,7 @@ eureka:
   client:
     service-url:
       defaultZone: http://eureka7001.com:7001/eureka/
-profile: 你就 是一个2b ,你还不承认
+profile: 顺其自然,修改修改吧,你这个2货
 
 ---
 server:
