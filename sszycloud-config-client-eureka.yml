@@ -16,7 +16,7 @@ eureka:
   client:
     service-url:
       defaultZone: http://eureka7001.com:7001/eureka/
-profile: 修改修改吧,你这个2货,   http://192.168.1.111:3355/
+profile: 修改修改吧,你这个2货,   http://192.168.1.111:3355/-------
 
 ---
 server:
@@ -31,4 +31,4 @@ eureka:
     service-url:
       defaultZone: http://eureka7001.com:7001/eureka/
 
-profile: 我更新了,你你你个23 http://192.168.1.111:3355/
+profile: 我更新了,你你你个233333 http://192.168.1.111:3355/---------
