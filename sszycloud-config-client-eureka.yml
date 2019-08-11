@@ -15,7 +15,7 @@ eureka:
   client:
     service-url:
       defaultZone: http://eureka7001.com:7001/eureka/
-profile: 顶戴适当的房基本原理
+profile: 塔顶 阿斯蒂芬工本 天天向上,好好学习
 
 ---
 server:
