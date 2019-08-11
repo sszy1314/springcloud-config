@@ -1,18 +1,18 @@
 server: 
   port: 3388 
-profile: h---asdfadadsl111111 
+
 ---
 server:
   port: 8201
 spring:
   profiles: dev
   application:
-    name: sszycloud-config-client
+    name: sszycloud-config-client-eureka
 
 eureka:
   client:
     service-url:
-      defaultZone: http://eureka-dev.com:7001/eureka/
+      defaultZone: http://eureka7001.com:7001/eureka/
 profile: h---asdfadadsl22222222 
 
 ---
@@ -21,11 +21,11 @@ server:
 spring:
   profiles: test
   application:
-    name: sszycloud-config-client
+    name: sszycloud-config-client-eureka
 
 eureka:
   client:
     service-url:
-      defaultZone: http://eureka-test.com:7001/eureka/
+      defaultZone: http://eureka7001.com:7001/eureka/
 
 profile: h---asdfadadsl33333333
