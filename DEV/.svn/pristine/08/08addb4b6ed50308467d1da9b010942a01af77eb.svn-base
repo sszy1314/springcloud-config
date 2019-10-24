@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yaic.app.common.dao.ContactsDao">
+    <resultMap id="contactsResultMap" type="com.yaic.app.common.dto.domain.ContactsDto">
+        <id property="contactsId" column="CONTACTS_ID" jdbcType="VARCHAR"></id>
+        <result property="userId" column="USER_ID" jdbcType="VARCHAR"></result>
+        <result property="contactsName" column="CONTACTS_NAME" jdbcType="VARCHAR"></result>
+        <result property="contactsBirthday" column="CONTACTS_BIRTHDAY" jdbcType="TIMESTAMP"></result>
+        <result property="contactsSex" column="CONTACTS_SEX" jdbcType="INTEGER"></result>
+        <result property="contactsCertificate" column="CONTACTS_CERTIFICATE" jdbcType="INTEGER"></result>
+        <result property="contactsCertificateNumber" column="CONTACTS_CERTIFICATE_NUMBER" jdbcType="VARCHAR"></result>
+        <result property="contactsMobile" column="CONTACTS_MOBILE" jdbcType="VARCHAR"></result>
+        <result property="contactsEmail" column="CONTACTS_EMAIL" jdbcType="VARCHAR"></result>
+        <result property="contactsStatus" column="CONTACTS_STATUS" jdbcType="VARCHAR"></result>
+    </resultMap>
+    
+      <insert id="insert" parameterType="com.yaic.app.common.dto.domain.ContactsDto">
+	     insert into app_contacts (
+		     CONTACTS_ID,USER_ID,CONTACTS_NAME,CONTACTS_BIRTHDAY,CONTACTS_SEX,
+		     CONTACTS_CERTIFICATE,CONTACTS_CERTIFICATE_NUMBER,CONTACTS_MOBILE,CONTACTS_EMAIL)
+	     values 
+	     	(#{contactsId}, #{userId},#{contactsName},#{contactsBirthday},#{contactsSex},
+	     	#{contactsCertificate},#{contactsCertificateNumber},#{contactsMobile},#{contactsEmail})
+	 </insert>
+	 <select id="contactsList" parameterType="java.util.HashMap"
+		resultMap="contactsResultMap">
+		select CONTACTS_ID,
+		USER_ID,CONTACTS_NAME,CONTACTS_BIRTHDAY,CONTACTS_SEX,CONTACTS_CERTIFICATE,CONTACTS_CERTIFICATE_NUMBER,CONTACTS_MOBILE,CONTACTS_EMAIL 
+		FROM app_contacts
+		<where>
+			CONTACTS_STATUS = 0
+			<if test="userId != null and userId != '' ">
+				AND USER_Id = #{userId}
+			</if>
+		</where>
+	</select>
+	<select id="selectOne" parameterType="com.yaic.app.common.dto.domain.ContactsDto" resultMap="contactsResultMap">
+     select CONTACTS_ID,
+		USER_ID,CONTACTS_NAME,CONTACTS_CERTIFICATE,CONTACTS_CERTIFICATE_NUMBER,CONTACTS_MOBILE,CONTACTS_EMAIL 
+		FROM app_contacts
+		<where>
+			CONTACTS_STATUS = 0
+			<if test="userId != null and userId != '' ">
+				AND USER_ID = #{userId}
+			</if>
+			<if test="contactsCertificateNumber != null and contactsCertificateNumber != '' ">
+				AND CONTACTS_CERTIFICATE_NUMBER = #{contactsCertificateNumber}
+			</if>
+		</where>
+     </select>
+     <update id="update"  parameterType="java.lang.String">
+		 UPDATE  APP_CONTACTS  SET CONTACTS_NAME = #{contactsName}, CONTACTS_MOBILE = #{contactsMobile},CONTACTS_EMAIL = #{contactsEmail} WHERE CONTACTS_ID =  #{contactsId}
+	 </update>
+	 <delete id="delete"  parameterType="java.lang.String">
+	   UPDATE  APP_CONTACTS  SET CONTACTS_STATUS = 1 WHERE CONTACTS_ID =  #{contactsId}
+	 </delete>
+</mapper>

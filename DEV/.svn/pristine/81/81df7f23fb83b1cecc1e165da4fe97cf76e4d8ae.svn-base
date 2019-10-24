@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yaic.app.common.dao.PolicyDao">
+
+     <resultMap id="policyResultMap" type="com.yaic.app.common.dto.domain.PolicyDto">
+        <id property="policyId" column="POLICY_ID" jdbcType="VARCHAR"></id>
+        <result property="userId" column="USER_ID" jdbcType="VARCHAR"></result>
+        <result property="insuranceId" column="INSURANCE_ID" jdbcType="VARCHAR"></result>
+        <result property="insuranceName" column="INSURANCE_NAME" jdbcType="VARCHAR"></result>
+        <result property="policyStatus" column="POLICY_STATUS" jdbcType="VARCHAR"></result>
+        <result property="policyHare" column="POLICY_HARE" jdbcType="VARCHAR"></result>
+        <result property="policyCreateDate" column="POLICY_CREATE_DATE" jdbcType="TIMESTAMP"></result>
+        <result property="policyStartDate" column="POLICY_START_DATE" jdbcType="TIMESTAMP"></result>
+        <result property="policyEndDate" column="POLICY_END_DATE" jdbcType="TIMESTAMP"></result>
+        <result property="policySum" column="POLICY_SUM" jdbcType="DECIMAL"></result>
+        <result property="buyerContactsId" column="BUYER_CONTACTS_ID" jdbcType="VARCHAR"></result>
+        <result property="recognizeeContactsId" column="RECOGNIZEE_CONTACTS_ID" jdbcType="VARCHAR"></result>
+        <result property="buyerRecognizeeRelation" column="BUYER_RECOGNIZEE_RELATION" jdbcType="VARCHAR"></result>
+    </resultMap>
+    
+	<resultMap id="selPolicyMap" type="HashMap">
+        <id property="policyId" column="POLICY_ID" jdbcType="VARCHAR"></id>
+        <result property="userId" column="USER_ID" jdbcType="VARCHAR"></result>
+        <result property="insuranceId" column="INSURANCE_ID" jdbcType="VARCHAR"></result>
+        <result property="insuranceName" column="INSURANCE_NAME" jdbcType="VARCHAR"></result>
+        <result property="policyStatus" column="POLICY_STATUS" jdbcType="VARCHAR"></result>
+        <result property="policyHare" column="POLICY_HARE" jdbcType="VARCHAR"></result>
+        <result property="policyCreateDate" column="POLICY_CREATE_DATE" jdbcType="VARCHAR"></result>
+        <result property="policyStartDate" column="POLICY_START_DATE" jdbcType="VARCHAR"></result>
+        <result property="policyEndDate" column="POLICY_END_DATE" jdbcType="VARCHAR"></result>
+        <result property="policySum" column="POLICY_SUM" jdbcType="VARCHAR"></result>
+        <result property="buyerContactsId" column="BUYER_CONTACTS_ID" jdbcType="VARCHAR"></result>
+        <result property="recognizeeContactsId" column="RECOGNIZEE_CONTACTS_ID" jdbcType="VARCHAR"></result>
+        <result property="buyerRecognizeeRelation" column="BUYER_RECOGNIZEE_RELATION" jdbcType="VARCHAR"></result>
+   		<result property="buyerContactsName" column="BUYER_CONTACTS_NAME" jdbcType="VARCHAR"></result>
+   		<result property="buyerContactsMobile" column="BUYER_CONTACTS_MOBILE" jdbcType="VARCHAR"></result>
+    	<result property="buyerContactsCertificate" column="BUYER_CONTACTS_CERTIFICATE" jdbcType="INTEGER"></result>
+        <result property="buyerContactsCertificateNumber" column="BUYER_CONTACTS_CERTIFICATE_NUMBER" jdbcType="VARCHAR"></result>
+        <result property="recognizeeContactsname" column="RECOGNIZEE_CONTACTS_NAME" jdbcType="VARCHAR"></result>
+        <result property="recognizeeContactsMobile" column="RECOGNIZEE_CONTACTS_MOBILE" jdbcType="VARCHAR"></result>
+    	<result property="recognizeeContactsCertificate" column="RECOGNIZEE_CONTACTS_CERTIFICATE" jdbcType="INTEGER"></result>
+        <result property="recognizeeContactsCertificateNumber" column="RECOGNIZEE_CONTACTS_CERTIFICATE_NUMBER" jdbcType="VARCHAR"></result>
+    </resultMap>
+      <insert id="insert" parameterType="com.yaic.app.common.dto.domain.PolicyDto">
+	     insert into app_policy (
+	     POLICY_ID,USER_ID,INSURANCE_ID,INSURANCE_NAME,POLICY_STATUS,POLICY_HARE,POLICY_CREATE_DATE,POLICY_START_DATE
+	     ,POLICY_END_DATE,POLICY_SUM,BUYER_CONTACTS_ID,RECOGNIZEE_CONTACTS_ID,BUYER_RECOGNIZEE_RELATION
+	     )values (#{policyId}, #{userId},#{insuranceId},#{insuranceName},#{policyStatus},#{policyHare},#{policyCreateDate}
+	     ,#{policyStartDate}, #{policyEndDate},#{policySum},#{buyerContactsId},#{recognizeeContactsId},#{buyerRecognizeeRelation}
+	     )
+	  </insert>
+	  <select id="list" parameterType="java.util.HashMap"
+		resultMap="policyResultMap">
+		select  POLICY_ID,INSURANCE_NAME,POLICY_STATUS FROM app_policy
+		<where>		
+			 USER_Id = #{userId}
+			<if test="policyStatus == 0 ">
+				AND POLICY_STATUS = #{policyStatus} AND POLICY_START_DATE > #{policyStartDate}
+			</if>
+			<if test="policyStatus == 1 ">
+				AND POLICY_STATUS = #{policyStatus} AND POLICY_END_DATE >=  #{policyEndDate}
+			</if>
+			<if test="policyStatus == 2 ">
+				AND POLICY_STATUS = 1 AND  #{policyEndDate} > POLICY_END_DATE
+			</if>
+		</where>
+	</select>
+	<select id="selPolicy" parameterType="java.util.HashMap"
+		resultMap="selPolicyMap">
+		select  a.POLICY_ID,	a.USER_ID,	a.INSURANCE_ID,	a.INSURANCE_NAME,	a.POLICY_STATUS,a.POLICY_HARE,	
+		DATE_FORMAT(a.POLICY_CREATE_DATE,'%Y-%m-%d %H:%i:%s')as POLICY_CREATE_DATE,	
+		DATE_FORMAT(a.POLICY_START_DATE,'%Y-%m-%d %H:%i:%s') as POLICY_START_DATE,
+		DATE_FORMAT(a.POLICY_END_DATE,'%Y-%m-%d %H:%i:%s') as POLICY_END_DATE,	a.POLICY_SUM ,
+		b.CONTACTS_NAME as BUYER_CONTACTS_NAME,	
+		b.CONTACTS_MOBILE as BUYER_CONTACTS_MOBILE,
+		b.CONTACTS_CERTIFICATE as BUYER_CONTACTS_CERTIFICATE,
+		b.CONTACTS_CERTIFICATE_NUMBER as BUYER_CONTACTS_CERTIFICATE_NUMBER,
+		c.CONTACTS_NAME as RECOGNIZEE_CONTACTS_NAME,
+		c.CONTACTS_MOBILE as RECOGNIZEE_CONTACTS_MOBILE,
+		c.CONTACTS_CERTIFICATE as RECOGNIZEE_CONTACTS_CERTIFICATE,
+		c.CONTACTS_CERTIFICATE_NUMBER as RECOGNIZEE_CONTACTS_CERTIFICATE_NUMBER,
+		a.BUYER_RECOGNIZEE_RELATION
+		FROM (select * from app_policy where POLICY_ID = #{policyId} ) a	, app_contacts b ,app_contacts c
+		<where>		
+			a.BUYER_CONTACTS_ID = b.CONTACTS_ID and a.RECOGNIZEE_CONTACTS_ID = c.CONTACTS_ID
+		</where>
+	</select>     
+	<update id="payPolicy"  parameterType="java.lang.String">
+		 UPDATE  app_policy  SET POLICY_STATUS = 1 WHERE POLICY_ID = #{policyId}
+	 </update>
+</mapper>

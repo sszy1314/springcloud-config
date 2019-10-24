@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yaic.app.common.dao.AddressDao">
+    <resultMap id="addressResultMap" type="com.yaic.app.common.dto.domain.AddressDto">
+        <id property="addressId" column="ADDRESS_ID" jdbcType="VARCHAR"></id>
+        <result property="userId" column="USER_ID" jdbcType="VARCHAR"></result>
+        <result property="addressProvince" column="ADDRESS_PROVINCE" jdbcType="INTEGER"></result>
+        <result property="addressCicy" column="ADDRESS_CICY" jdbcType="INTEGER"></result>
+        <result property="addressCounties" column="ADDRESS_COUNTIES" jdbcType="INTEGER"></result>
+        <result property="addressDatailed" column="ADDRESS_DATAILED" jdbcType="VARCHAR"></result>
+    </resultMap>
+     <update id="update"  parameterType="com.yaic.app.common.dto.domain.AddressDto">
+		 UPDATE  APP_ADDRESS  SET ADDRESS_PROVINCE = #{addressProvince},ADDRESS_CICY = #{addressCicy},
+		 ADDRESS_COUNTIES = #{addressCounties},ADDRESS_DATAILED = #{addressDatailed}
+		 WHERE ADDRESS_ID = #{addressId}
+	 </update>
+      <insert id="insert" parameterType="com.yaic.app.common.dto.domain.AddressDto">
+	     insert into app_address (
+		     ADDRESS_ID,USER_ID,ADDRESS_PROVINCE,ADDRESS_CICY,ADDRESS_COUNTIES,ADDRESS_DATAILED)
+	     values 
+	     	(#{addressId}, #{userId},#{addressProvince},#{addressCicy},#{addressCounties},
+	     	#{addressDatailed})
+	 </insert>
+	  <select id="list" parameterType="java.util.HashMap"
+		resultMap="addressResultMap">
+		select ADDRESS_ID,USER_ID,ADDRESS_PROVINCE,ADDRESS_CICY,ADDRESS_COUNTIES,ADDRESS_DATAILED 
+		FROM app_address
+		<where>
+			1=1
+			<if test="userId != null and userId != '' ">
+				AND USER_Id = #{userId}
+			</if>
+		</where>
+	</select>
+	<delete id="delete"  parameterType="java.lang.String">
+	  delete from APP_ADDRESS where ADDRESS_ID = #{addressId} 
+	 </delete>
+</mapper>
