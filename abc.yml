@@ -31,4 +31,4 @@ eureka:
     service-url:
       defaultZone: http://eureka7001.com:7001/eureka/
 
-profile: 测试配置文件名testtesttesttesttesttesttest
+profile: 测试配置文件名testtesttesttesttesttesttest暗示的发生大幅 基本原理
